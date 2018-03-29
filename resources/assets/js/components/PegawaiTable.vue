@@ -11,13 +11,13 @@
 		</tr>
       </thead>
       <tbody>
-        <tr v-for="(row, i) in rows">
+        <tr v-for="(employee, i) in employees">
             <td>{{ i + 1}}</td>
-            <td>{{row.nip}}</td>
-            <td>{{row.name}}</td>
-            <td>{{row.jabatan}}</td>
+            <td>{{employee.nip}}</td>
+            <td>{{employee.name}}</td>
+            <td>{{employee.position.name}}</td>
             <td>
-            	<button class="btn btn-success" onclick="">Modal</button>
+            	<button class="btn btn-success" @click="bukaModal">Modal</button>
             </td>
         </tr>
       </tbody>
@@ -66,18 +66,24 @@
 export default {
 	data(){
 		return {
-			rows: [
-				{name : "Row 1", nip: 101, jabatan: "Kasir"},
-				{name : "Row 2", nip: 101, jabatan: "Kasir"},
-				{name : "Row 3", nip: 101, jabatan: "Kasir"},
-				{name : "Row 4", nip: 101, jabatan: "Kasir"},
-			]
+			employees: [],
+			editForm: {}
 		}
 	},
 	created(){
-		$(document).ready(function(){
-		    $('#tbPegawai').DataTable()
+		axios.get(`/api/employee`).then((res) => {
+			this.employees = res.data.employees
+			$(document).ready(function(){
+			    $('#tbPegawai').DataTable()
+			})
+		}).catch((err) => {
+			console.log(err)
 		})                                                                      
+	},
+	methods: {
+		bukaModal: function(){
+			$("#modalCreate").modal();
+		}
 	}
 }
 

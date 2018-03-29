@@ -9,13 +9,13 @@ class EmployeeController extends Controller
 {
     public function index(){
     	return response()->json([
-    		'employees' => Employee::all()
+    		'employees' => Employee::with('position')->get()
     	]);
     }
 
     public function show($id){
     	return response()->json([
-    		'employee' => Employee::findOrFail($id)
+    		'employee' => Employee::with('position')->findOrFail($id)
     	]);
     }
 

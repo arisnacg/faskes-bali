@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
         for($i = 1; $i <= 10; $i++){
         	$user = User::create([
         		'email' => $faker->safeEmail,
-        		'password' => 'password',
+        		'password' => bcrypt('password'),
         		'employee_id' => $i
         	]);
         }

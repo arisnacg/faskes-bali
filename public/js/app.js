@@ -30605,13 +30605,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			rows: [{ name: "Row 1", nip: 101, jabatan: "Kasir" }, { name: "Row 2", nip: 101, jabatan: "Kasir" }, { name: "Row 3", nip: 101, jabatan: "Kasir" }, { name: "Row 4", nip: 101, jabatan: "Kasir" }]
+			employees: [],
+			editForm: {}
 		};
 	},
 	created: function created() {
-		$(document).ready(function () {
-			$('#tbPegawai').DataTable();
+		var _this = this;
+
+		axios.get("/api/employee").then(function (res) {
+			_this.employees = res.data.employees;
+			$(document).ready(function () {
+				$('#tbPegawai').DataTable();
+			});
+		}).catch(function (err) {
+			console.log(err);
 		});
+	},
+
+	methods: {
+		bukaModal: function bukaModal() {
+			$("#modalCreate").modal();
+		}
 	}
 });
 
@@ -30635,24 +30649,33 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.rows, function(row, i) {
+          _vm._l(_vm.employees, function(employee, i) {
             return _c("tr", [
               _c("td", [_vm._v(_vm._s(i + 1))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(row.nip))]),
+              _c("td", [_vm._v(_vm._s(employee.nip))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(row.name))]),
+              _c("td", [_vm._v(_vm._s(employee.name))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(row.jabatan))]),
+              _c("td", [_vm._v(_vm._s(employee.position.name))]),
               _vm._v(" "),
-              _vm._m(1, true)
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: { click: _vm.bukaModal }
+                  },
+                  [_vm._v("Modal")]
+                )
+              ])
             ])
           })
         )
       ]
     ),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -30672,14 +30695,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Operasi")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Modal")])
     ])
   },
   function() {

@@ -7,4 +7,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('/employee', 'EmployeeController');
+Route::resource('/partner', 'PartnerController');
+Route::resource('/contract', 'ContractController');
+Route::resource('/facility', 'FacilityController');
 Route::resource('/user', 'UserController');
