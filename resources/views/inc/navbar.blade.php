@@ -14,7 +14,9 @@
 		<ul class="navbar-nav ml-auto" v-show="check">
 			@if (!Auth::guest())
 				<li class="nav-item active">
-					<a class="nav-link" href="#"><span class="la la-user"></span> {{ $user->employee->name }}</a>
+					<a class="nav-link" href="#"><span class="la la-user"></span>
+						{{ $user->employee->name }}
+					</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href="{{ route('logout') }}"

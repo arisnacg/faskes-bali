@@ -1,26 +1,24 @@
 <template>
   <div>
-    <table id="tbPegawai" class="table table-stripped table-responsive" width="100%" cellspacing="0">
+    <table id="table" class="table table-stripped table-responsive" width="100%" cellspacing="0">
       <thead>
 		<tr>
 			<th>No</th>
-			<th>NIP</th>
-			<th>Nama</th>
-			<th>Jabatan</th>
+			<th>Email</th>
+			<th>Pegawai</th>
 			<th>Operasi</th>
 		</tr>
       </thead>
       <tbody>
-        <tr v-for="(employee, i) in employees">
+        <tr v-for="(user, i) in users">
             <td>{{ i + 1}}</td>
-            <td>{{employee.nip}}</td>
-            <td>{{employee.name}}</td>
-            <td>{{employee.position.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.employee.name}}</td>
             <td>
-            	<button class="btn btn-success" @click="editRow(employee)">
+            	<!-- <button class="btn btn-success" @click="editRow(user)">
             		<span class="fa fa-pencil"></span>
-            	</button>
-            	<button class="btn btn-danger" @click="destroy(employee)">
+            	</button> -->
+            	<button class="btn btn-danger" @click="destroy(user)">
             		<span class="fa fa-trash"></span>
             	</button>
             </td>
@@ -34,12 +32,12 @@
 		<a @click.prevent="createRow"  class="btn-success" data-toggle="tooltip" data-placement="top" title="Tambah Jadwal"><span class="fa fa-plus"></span></a>
 	</div>
 
-  	<!-- modal edit pegawai -->
-	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<!-- modal edit -->
+  	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Jadwal</h5>
+					<h5 class="modal-title">Edit User</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -47,23 +45,27 @@
 				<form @submit.prevent="update">
 					<div class="modal-body">
 						<div class="form-group">
-							<label class="form-label">Nama Pegawai</label>
-							<input type="text" class="form-control" v-model="editForm.name">
-							<small class="error-control" v-if="error.name">{{error.name[0]}}</small>
+							<label class="form-label">Email</label>
+							<input type="email" class="form-control" v-model="editForm.email">
+							<small class="error-control" v-if="error.email">{{error.email[0]}}</small>
 						</div>
 						<div class="form-group">
-							<label class="form-label" for="pegawai">NIP Pegawai</label>
-							<input type="text" class="form-control" v-model="editForm.nip">
-							<small class="error-control" v-if="error.nip">{{error.nip[0]}}</small>
+							<label class="form-label" for="pegawai">Password</label>
+							<input type="password" class="form-control" v-model="editForm.password">
+							<small class="error-control" v-if="error.password">{{error.password[0]}}</small>
 						</div>
 						<div class="form-group">
-							<label class="form-label">Jabatan Pegawai</label>
-							<select class="form-control" v-model="editForm.position_id">
-								<option v-for="position in positions" :value="position.id">
-									{{position.name}}
+							<label class="form-label" for="pegawai">Konfirmasi Password</label>
+							<input type="password" class="form-control" v-model="editForm.password_confirmation">
+						</div>
+						<div class="form-group">
+							<label class="form-label">Dari Pegawai</label>
+							<select class="form-control" v-model="editForm.employee_id">
+								<option v-for="employee in validEmployees" :value="employee.id">
+									{{employee.name}}
 								</option>
 							</select>
-							<small class="error-control" v-if="error.position_id">{{error.position_id[0]}}</small>
+							<small class="error-control" v-if="error.employee_id">{{error.employee_id[0]}}</small>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -73,14 +75,13 @@
 			</div>
 		</div>
 	</div>
-	<!-- modal edit pegawai -->
 
-	<!-- modal create pegawai -->
+	<!-- modal create -->
 	<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Edit Jadwal</h5>
+					<h5 class="modal-title">User Baru</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -88,23 +89,27 @@
 				<form @submit.prevent="store">
 					<div class="modal-body">
 						<div class="form-group">
-							<label class="form-label">Nama Pegawai</label>
-							<input type="text" class="form-control" v-model="createForm.name">
-							<small class="error-control" v-if="error.name">{{error.name[0]}}</small>
+							<label class="form-label">Email</label>
+							<input type="email" class="form-control" v-model="createForm.email">
+							<small class="error-control" v-if="error.email">{{error.email[0]}}</small>
 						</div>
 						<div class="form-group">
-							<label class="form-label" for="pegawai">NIP Pegawai</label>
-							<input type="text" class="form-control" v-model="createForm.nip">
-							<small class="error-control" v-if="error.nip">{{error.nip[0]}}</small>
+							<label class="form-label" for="pegawai">Password</label>
+							<input type="password" class="form-control" v-model="createForm.password">
+							<small class="error-control" v-if="error.password">{{error.password[0]}}</small>
 						</div>
 						<div class="form-group">
-							<label class="form-label">Jabatan Pegawai</label>
-							<select class="form-control" v-model="createForm.position_id">
-								<option v-for="position in positions" :value="position.id">
-									{{position.name}}
+							<label class="form-label" for="pegawai">Konfirmasi Password</label>
+							<input type="password" class="form-control" v-model="createForm.password_confirmation">
+						</div>
+						<div class="form-group">
+							<label class="form-label">Dari Pegawai</label>
+							<select class="form-control" v-model="createForm.employee_id">
+								<option v-for="employee in validEmployees" :value="employee.id">
+									{{employee.name}}
 								</option>
 							</select>
-							<small class="error-control" v-if="error.position_id">{{error.position_id[0]}}</small>
+							<small class="error-control" v-if="error.employee_id">{{error.employee_id[0]}}</small>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -114,7 +119,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- modal create pegawai -->
 
   </div> 
 
@@ -126,26 +130,26 @@ export default {
 	data(){
 		return {
 			isProcessing: false,
-			employees: [],
+			users: [],
 			editForm: {},
 			createForm: {
-				position_id: 1
+				employee_id: 1,
+				employee: {}
 			},
-			positions: [],
+			validEmployees: [],
 			error: {}
 		}
 	},
 	created(){
-		console.log($('meta[name="csrf-token"]').attr('content'))
-		axios.get(`/employee`).then((res) => {
-			this.employees = res.data.employees
-			this.positions = res.data.positions
+		axios.get(`/user`).then((res) => {
+			this.users = res.data.users
+			this.validEmployees = res.data.validEmployees
 			$(document).ready(function(){
-			    $('#tbPegawai').DataTable()
+			    $('#table').DataTable()
 			})
 		}).catch((err) => {
 			console.log(err)
-		})                                                            
+		})                                                        
 	},
 	methods: {
 		editRow(data){
@@ -154,9 +158,9 @@ export default {
 		},
 		update(){
 			this.isProcessing = true
-			const i = this.positions.findIndex(x => x.id==this.editForm.position_id);
-			this.editForm.position = this.positions[i]
-			axios.put('/employee/'+this.editForm.id, this.editForm).then((res) => {
+			const i = this.validEmployees.findIndex(x => x.id==this.editForm.employee_id);
+			this.editForm.employee = Object.assign({}, this.validEmployees[i])
+			axios.put('/user/'+this.editForm.id, this.editForm).then((res) => {
 				if(res.data.updated){
 					$("#modalEdit").modal('hide')
 					swal({
@@ -166,8 +170,8 @@ export default {
 						button: false,
 						timer: 1200
 					})
-					const i = this.employees.findIndex(x => x.id==this.editForm.id);
-					this.employees[i] = Object.assign({}, this.editForm)
+					const i = this.users.findIndex(x => x.id==this.editForm.id);
+					this.users[i] = Object.assign({}, this.editForm)
 				}
 				this.isProcessing = false
 			}).catch((err) => {
@@ -180,7 +184,7 @@ export default {
 		},
 		store(){
 			this.isProcessing = true
-			axios.post('/employee', this.createForm).then((res) => {
+			axios.post('/user', this.createForm).then((res) => {
 				if(res.data.stored){
 					$("#modalCreate").modal('hide')
 					swal({
@@ -190,10 +194,18 @@ export default {
 						button: false,
 						timer: 1200
 					})
-					const i = this.positions.findIndex(x => x.id==this.createForm.position_id);
-					this.createForm.position = this.positions[i]
-					this.employees.push(this.createForm)
+					const i = this.validEmployees.findIndex(x => x.id==this.createForm.employee_id);
+					this.createForm.employee = Object.assign({}, this.validEmployees[i])
+					this.users.push(this.createForm)
 					this.createForm = {}
+					this.isProcessing = false
+				} else {
+					swal({
+						title: "Info",
+					  	text: res.data.msg,
+					  	icon: "info",
+					 	button: true
+					})
 					this.isProcessing = false
 				}
 			}).catch((err) => {
@@ -211,7 +223,7 @@ export default {
 			})
 			.then((willDelete) => {
 			  if (willDelete) {
-			    axios.delete('/employee/'+data.id).then((res) => {
+			    axios.delete('/user/'+data.id).then((res) => {
 					if(res.data.deleted){
 						swal({
 							title: "Sukses",
@@ -220,8 +232,8 @@ export default {
 						 	button: false,
 						  	timer: 1200
 						})
-						const i = this.employees.indexOf(data);
-                        this.employees.splice(i, 1);
+						const i = this.users.indexOf(data);
+                        this.users.splice(i, 1);
 					} else {
 						swal({
 							title: "Info",

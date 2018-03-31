@@ -25,7 +25,7 @@
 						<p class="card-title">Tabel Kelola Pegawai</p>
 						<!-- tabel -->
 						<div id="app">
-							<pegawai-table></pegawai-table>
+							<rekanan-table></rekanan-table>
 						</div>
 					</div>
 				</div>

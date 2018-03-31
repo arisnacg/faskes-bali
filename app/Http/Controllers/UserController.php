@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Employee;
+use Auth;
 
 class UserController extends Controller
 {
     public function index(){
     	return response()->json([
-    		'users' => User::all()
+    		'users' => User::with('employee')->get(),
+            'validEmployees' => Employee::all()
     	]);
     }
 
@@ -23,11 +26,11 @@ class UserController extends Controller
 
     	$this->validate($req, [
             'email' => "required|email",
-            'password' => "required",
+            'password' => "required|confirmed|between:6,25",
             'employee_id' => "required|integer"
         ]);
-
-    	if(User::where('employee_id', $req->employee_id)){
+        $user = User::where('employee_id', $req->employee_id)->get();
+    	if(count($user) > 0){
     		return response()->json([
 	    		'stored' => false,
 	    		'msg' => 'Pegawai sudah memiliki akun',
@@ -51,7 +54,7 @@ class UserController extends Controller
 
     	$this->validate($req, [
             'email' => "required|email",
-            'password' => "required",
+            'password' => "required|confirmed|between:6,25",
             'employee_id' => "required|integer"
         ]);
 
@@ -76,6 +79,14 @@ class UserController extends Controller
     }
 
     public function destroy($id){
+
+        if(Auth::user()->id == $id){
+            return response()->json([
+                'deleted' => false,
+                'msg' => 'Akun sedang dalam keadaan login',
+            ]);
+        }
+
     	User::findOrFail($id)->delete();
 
     	return response()->json([
