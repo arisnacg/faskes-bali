@@ -16,13 +16,12 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->string('code');
             $table->integer('value');
-            $table->integer('consultant');
-            $table->integer('contractor');
-            $table->integer('ppk');
-            $table->integer('pptk');
+            $table->integer('consultant_id');
+            $table->integer('contractor_id');
+            $table->integer('ppk_id');
+            $table->integer('pptk_id');
             $table->timestamps();
         });
 

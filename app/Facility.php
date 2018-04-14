@@ -23,7 +23,7 @@ class Facility extends Model
 		return $this->belongsTo(Condition::class, 'condition_id');
 	}
 
-	public function traffic_signs(){
+	public function traffic_sign(){
 		return $this->belongsToMany(TrafficSign::class, 'facility_traffic_sign', 'facility_id', 'traffic_sign_id')
 			->withPivot('id');
 	}

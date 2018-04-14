@@ -27,6 +27,21 @@ body {
 	font-size: 18px;
 }
 
+.form-qrcode {
+	width: 95%;
+	max-width: 380px;
+	padding: 30px 25px;
+	margin: 80px auto 0;
+}
+
+.form-qrcode h1 {
+	font-size: 28px;
+	color: #525e6b;
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 25px;
+}
+
 .error-control {
 	color: #ed5757;
 	font-size: 14px;

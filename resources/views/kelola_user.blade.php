@@ -22,7 +22,7 @@
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-body">
-						<p class="card-title">Tabel Kelola Pegawai</p>
+						<p class="card-title">Tabel Kelola User</p>
 						<!-- tabel -->
 						<div id="app">
 							<user-table></user-table>

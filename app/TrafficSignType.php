@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrafficSignType extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['id', 'name'];
     public $timestamps = false;
 
     public function traffic_signs(){

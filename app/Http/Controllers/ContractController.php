@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contract;
+use App\Facility;
 
 class ContractController extends Controller
 {
     public function index(){
     	return response()->json([
-    		'contracts' => Contract::all()
+    		'contracts' => Contract::with(['consultant','contractor', 'ppk','pptk'])->get()
     	]);
     }
 
@@ -22,12 +23,11 @@ class ContractController extends Controller
     public function store(Request $req){
         $this->validate($req, [
         	'code' => 'required',
-            'name' => 'required',
             'value' => 'required|integer',
-            'consultant' => 'required|integer',
-            'contractor' => 'required|integer',
-            'ppk' => 'required|integer',
-            'pptk' => 'required|integer',
+            'consultant_id' => 'required|integer',
+            'contractor_id' => 'required|integer',
+            'ppk_id' => 'required|integer',
+            'pptk_id' => 'required|integer',
             'year' => 'required|integer'
         ]);
 
@@ -40,15 +40,13 @@ class ContractController extends Controller
     }
 
     public function update($id, Request $req){
-        
         $this->validate($req, [
             'code' => 'required',
-            'name' => 'required',
             'value' => 'required|integer',
-            'consultant' => 'required|integer',
-            'contractor' => 'required|integer',
-            'ppk' => 'required|integer',
-            'pptk' => 'required|integer',
+            'consultant_id' => 'required|integer',
+            'contractor_id' => 'required|integer',
+            'ppk_id' => 'required|integer',
+            'pptk_id' => 'required|integer',
             'year' => 'required|integer'
         ]);
 
@@ -61,7 +59,9 @@ class ContractController extends Controller
     }
 
     public function destroy($id){
-    	Contract::findOrFail($id)->delete();
+    	$contract = Contract::findOrFail($id);
+        Facility::where('contract_id', $contract->id)->delete();
+        $contract->delete();
 
     	return response()->json([
     		'deleted' => true,

@@ -1,0 +1,24 @@
+{
+	"traffic_signs": [
+		{
+		"id": 1,
+		"src": "images/rambu/larangan/1a.png",
+		"traffic_sign_type_id": 1
+		},
+		{
+		"id": 23,
+		"src": "images/rambu/larangan/1b.png",
+		"traffic_sign_type_id": 1
+		},
+		{
+		"id": 25,
+		"src": "images/rambu/larangan/1c.png",
+		"traffic_sign_type_id": 1
+		},
+		{
+		"id": 26,
+		"src": "images/rambu/larangan/1d.png",
+		"traffic_sign_type_id": 1
+		}
+	]
+}

@@ -36,9 +36,9 @@
             <button type="submit" class="btn btn-block btn-success">
                 Login
             </button>
-            {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
-                Forgot Your Password?
-            </a> --}}
+            <a class="btn btn-primary btn-block" href="/qrcode" style="margin-top: 5px">
+                Qrcode Generator
+            </a>
         </div>
     </form>
 </div>

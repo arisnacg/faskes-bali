@@ -31,7 +31,7 @@
 
 	<!-- btn float -->
   	<div class="float-btn">
-		<a @click.prevent="createRow"  class="btn-success" data-toggle="tooltip" data-placement="top" title="Tambah Jadwal"><span class="fa fa-plus"></span></a>
+		<a @click.prevent="createRow"  class="btn-success"><span class="fa fa-plus"></span></a>
 	</div>
 
   	<!-- modal edit pegawai -->
@@ -190,7 +190,7 @@ export default {
 						button: false,
 						timer: 1200
 					})
-					const i = this.positions.findIndex(x => x.id==this.createForm.position_id);
+					const i = this.positions.findIndex(x => x.id==this.createForm.position_id)
 					this.createForm.position = this.positions[i]
 					this.employees.push(this.createForm)
 					this.createForm = {}

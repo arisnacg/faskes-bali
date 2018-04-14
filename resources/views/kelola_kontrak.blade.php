@@ -22,10 +22,10 @@
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-body">
-						<p class="card-title">Tabel Kelola Pegawai</p>
+						<p class="card-title">Tabel Kelola Kontrak</p>
 						<!-- tabel -->
 						<div id="app">
-							<rekanan-table></rekanan-table>
+							<kontrak-table></kontrak-table>
 						</div>
 					</div>
 				</div>

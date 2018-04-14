@@ -15,12 +15,11 @@ class EmployeeTableSeeder extends Seeder
     {
         Employee::truncate();
         $faker = Factory::create();
-        for($i = 0; $i <= 10; $i++){
-        	$employee = Employee::create([
-        		'name' => $faker->name,
-        		'nip' => mt_rand(1000, 2000),
-        		'position_id' => mt_rand(1, 3)
-        	]);
-        }
+    	Employee::create([
+            'id' => 1,
+    		'name' => 'Pegawai 1',
+    		'nip' => '100000001',
+    		'position_id' => 1
+    	]);
     }
 }

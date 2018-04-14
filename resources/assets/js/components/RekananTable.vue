@@ -5,10 +5,6 @@
 		<tr>
 			<th>No</th>
 			<th>Nama</th>
-			<th>Direktor</th>
-			<th>Alamat</th>
-			<th>Email</th>
-			<th>Telepon</th>
 			<th>Tipe</th>
 			<th>Operasi</th>
 		</tr>
@@ -17,12 +13,11 @@
         <tr v-for="(partner, i) in partners">
             <td>{{ i + 1}}</td>
             <td>{{partner.name}}</td>
-            <td>{{partner.director}}</td>
-            <td>{{partner.address}}</td>
-            <td>{{partner.email}}</td>
-            <td>{{partner.phone}}</td>
             <td>{{types[partner.type-1]}}</td>
             <td>
+            	<button class="btn btn-primary" @click="viewRow(partner)">
+            		<span class="fa fa-eye"></span>
+            	</button>
             	<button class="btn btn-success" @click="editRow(partner)">
             		<span class="fa fa-pencil"></span>
             	</button>
@@ -37,7 +32,53 @@
 
 	<!-- btn float -->
   	<div class="float-btn">
-		<a @click.prevent="createRow"  class="btn-success" data-toggle="tooltip" data-placement="top" title="Tambah Jadwal"><span class="fa fa-plus"></span></a>
+		<a @click.prevent="createRow"  class="btn-success"><span class="fa fa-plus"></span></a>
+	</div>
+
+	<!-- modal edit -->
+  	<div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Lihat Detail Rekanan</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="form-label">Nama</label>
+							<input type="text" class="form-control" v-model="viewForm.name" disabled>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Direktur</label>
+							<input type="text" class="form-control" v-model="viewForm.director" disabled>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Alamat</label>
+							<textarea class="form-control" v-model="viewForm.address" rows="2" disabled></textarea>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Email</label>
+							<input type="email" class="form-control" v-model="viewForm.email" disabled>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Telepon</label>
+							<input type="text" class="form-control" v-model="viewForm.phone" disabled>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Jenis Rekanan</label>
+							<select class="form-control" v-model="viewForm.type" disabled>
+								<option v-for="(type, i) in types" :value="i+1">
+									{{type}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
   	<!-- modal edit -->
@@ -162,10 +203,11 @@ export default {
 			isProcessing: false,
 			partners: [],
 			editForm: {},
+			viewForm: {},
 			createForm: {
 				type: 1
 			},
-			types: ["Kontraktor", "Konsultan"],
+			types: ["Konsultan", "Kontraktor"],
 			error: {}
 		}
 	},
@@ -180,6 +222,10 @@ export default {
 		})                                                      
 	},
 	methods: {
+		viewRow(data){
+			this.viewForm = data
+			$("#modalView").modal()
+		},
 		editRow(data){
 			this.editForm = Object.assign({}, data)
 			$("#modalEdit").modal()

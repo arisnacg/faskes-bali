@@ -15,12 +15,10 @@ class UserTableSeeder extends Seeder
     {
         $faker = Factory::create();
         User::truncate();
-        for($i = 1; $i <= 10; $i++){
-        	$user = User::create([
-        		'email' => $faker->safeEmail,
-        		'password' => bcrypt('password'),
-        		'employee_id' => $i
-        	]);
-        }
+    	User::create([
+    		'email' => 'user1@mail.com',
+    		'password' => bcrypt('password'),
+    		'employee_id' => 1
+    	]);
     }
 }

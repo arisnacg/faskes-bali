@@ -16,6 +16,7 @@ class OtherTableSeeder extends Seeder
     {
 
         //Kondisi
+        Condition::truncate();
         $arrCon = ['Baik', 'Rusak', 'Hilang'];
         foreach($arrCon as $con){
             Condition::create([

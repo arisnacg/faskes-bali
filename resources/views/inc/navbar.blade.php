@@ -4,7 +4,8 @@
 		<span class="la la-bars"></span>
 	</button>
 	<a class="navbar-brand" href="#">
-		<b style="color: #5ebea9; margin-right: 2px">FASKES</b>.DEV
+		{{-- <b style="color: #5ebea9; margin-right: 2px">FASKES</b>.DEV --}}
+		<b style="color: #5ebea9; margin-right: 2px">{{ $app->name }}</b>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="lalse" aria-label="Toggle navigation">
 		<span class="la la-ellipsis-v"></span>
@@ -12,6 +13,14 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav ml-auto" v-show="check">
+			<li class="nav-item active">
+				<a class="nav-link" href="/qrcode"><span class="la la-qrcode"></span>
+				</a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" href="/pengaturan"><span class="la la-cog"></span>
+				</a>
+			</li>
 			@if (!Auth::guest())
 				<li class="nav-item active">
 					<a class="nav-link" href="#"><span class="la la-user"></span>
@@ -31,6 +40,7 @@
 	                </form>
 				</li>
 			@endif
+			
 		</ul>
 	</div>
 </nav>

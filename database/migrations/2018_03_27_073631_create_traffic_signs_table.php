@@ -15,8 +15,7 @@ class CreateTrafficSignsTable extends Migration
     {
         Schema::create('traffic_signs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('image');
+            $table->string('src');
             $table->integer('traffic_sign_type_id');
         });
     }

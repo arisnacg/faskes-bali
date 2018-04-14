@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "vue-router": "^3.0.1",
+    "vue-select-image": "^1.2.0",
     "vue2-datatable-component": "^2.2.2"
   }
 }

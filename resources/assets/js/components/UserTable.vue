@@ -29,7 +29,7 @@
 
 	<!-- btn float -->
   	<div class="float-btn">
-		<a @click.prevent="createRow"  class="btn-success" data-toggle="tooltip" data-placement="top" title="Tambah Jadwal"><span class="fa fa-plus"></span></a>
+		<a @click.prevent="createRow"  class="btn-success"><span class="fa fa-plus"></span></a>
 	</div>
 
   	<!-- modal edit -->
